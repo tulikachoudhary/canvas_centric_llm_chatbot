@@ -1,7 +1,7 @@
 import requests
 
 # Your personal access token
-access_token = "your_personal_token"
+access_token = "11299~FktGUfzV4QcVAJZ7afyPDWKctnheWULrXJx394cvhU9eMmLzcmzUDPuJc2kLZv3w"
 
 # Headers for the request
 headers = {
