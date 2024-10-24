@@ -1,7 +1,7 @@
 import requests
 
 # Your personal access token
-access_token = "your-token"
+access_token = "11299~7r3vXW4xyUeJVuh4EnLhwnP4KYy3DBPhfPrmm6DmHn2MEu33LWCQ4D4TmaJ9cA7D"
 # Headers for the request
 headers = {
     "Authorization": f"Bearer {access_token}"
@@ -16,8 +16,7 @@ def get_courses():
     if response.status_code == 200:
         return response.json()
     else:
-        print(f"Error fetching courses: {response.status_code}")
-        return []
+        return {'error': f"Error fetching courses: {response.status_code}"}
 
 # Function to get the syllabus for a course
 def get_syllabus(course_id):
@@ -28,8 +27,7 @@ def get_syllabus(course_id):
     if response.status_code == 200:
         return response.json().get('syllabus_body', 'No syllabus found.')
     else:
-        print(f"Error fetching syllabus: {response.status_code}")
-        return 'No syllabus found.'
+        return f"Error fetching syllabus: {response.status_code}"
 
 # Function to get assignments for a course, including metadata
 def get_assignments(course_id):
@@ -75,28 +73,44 @@ def get_syllabus_or_file(course_id):
     
     return "Sorry, no syllabus found in the course."
 
-# Example usage
-courses = get_courses()
+# Function to handle course information retrieval and return data
+def handle_courses():
+    courses = get_courses()
 
-# Loop through the courses and handle restricted courses and metadata
-for course in courses:
-    if isinstance(course, dict):  # Ensure course is a dictionary
-        if 'access_restricted_by_date' in course and course['access_restricted_by_date']:
-            print(f"Course ID: {course['id']} is restricted by date. Attempting to retrieve basic info.")
+    if isinstance(courses, dict) and 'error' in courses:
+        return courses['error']
+    
+    result = []
+    
+    for course in courses:
+        if isinstance(course, dict):  # Ensure course is a dictionary
+            name = course.get('name', None)
+            course_id = course.get('id', None)
             
-            # Attempt to retrieve restricted content: Assignments, Metadata
-            course_id = course.get('id')
-            print(f"Assignments for restricted course {course_id}:\n{get_assignments(course_id)}")
-            print(f"Files for restricted course {course_id}:\n{get_course_files(course_id)}")
+            # Skip the course if either the name or the course_id is missing
+            if not name or not course_id:
+                continue  # Move to the next course
+
+            course_data = {'Course Name': name, 'Course ID': course_id}
+            
+            if 'access_restricted_by_date' in course and course['access_restricted_by_date']:
+                course_data['Restricted'] = True
+                course_data['Assignments'] = get_assignments(course_id)
+                course_data['Files'] = get_course_files(course_id)
+            else:
+                course_data['Restricted'] = False
+                course_data['Syllabus'] = get_syllabus_or_file(course_id)
+                course_data['Assignments'] = get_assignments(course_id)
+                course_data['Files'] = get_course_files(course_id)
+            
+            result.append(course_data)
         else:
-            name = course.get('name', 'No name available')
-            course_id = course.get('id', 'No ID available')
-            print(f"Course Name: {name}, Course ID: {course_id}")
-            
-            # Attempt to retrieve syllabus and assignments
-            print(f"Syllabus for course {course_id}:\n{get_syllabus_or_file(course_id)}")
-            print(f"Assignments for course {course_id}:\n{get_assignments(course_id)}")
-            print(f"Files for course {course_id}:\n{get_course_files(course_id)}")
-    else:
-        print(f"Unexpected course format: {course}")
+            result.append({'error': 'Unexpected course format'})
 
+    return result
+
+# Example usage
+courses_data = handle_courses()
+
+# If you want to use `courses_data` further, you can print or log it
+# For example, you can return it from a web API or log it to a file
