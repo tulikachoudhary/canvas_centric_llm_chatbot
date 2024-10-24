@@ -1,0 +1,81 @@
+/* General body styling */
+body {
+    background-color: teal;
+    color: black;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Header */
+header {
+    background-color: #6CA6E5; /* Dark sky blue */
+    color: white;
+    text-align: center;
+    padding: 10px;
+    font-size: 1.5rem;
+    position: relative;
+}
+
+main {
+    flex-grow: 1; /* Allow the main content to grow and fill the space */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#outputBox {
+    width: 90%;
+    max-width: 600px;
+    height: 100%;
+    background-color: teal;
+    color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow-y: auto; /* Allows scrolling if output exceeds available height */
+    box-sizing: border-box;
+    font-size: 1.2rem;
+    margin: 20px 0;
+}
+
+/* Message Container Styling */
+footer {
+    background-color: #607D8B; /* Darker blue for message bar */
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.message-container {
+    display: flex;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 20px;
+    background-color: #7E9DAE;
+    padding: 10px;
+}
+
+.message-container input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 15px;
+    outline: none;
+    margin-right: 10px;
+}
+
+.send-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.send-button img {
+    width: 24px;
+    height: auto;
+}
