@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CanvasGPT</title>
-    <link rel="stylesheet" href="../assets/style.css"> <!-- Link to your CSS file -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/style.css') }}">
 </head>
 <body>
     <header>
@@ -15,14 +15,14 @@
     </main>
     <!-- Messaging Area at the Bottom -->
     <footer>
+      <form action="/api" method="post">
         <div class="message-container">
-            <input type="text" id="messageInput" placeholder="Message CanvasGPT">
-            <button class="send-button">
+            <input type="text" name="messageInput" placeholder="Message CanvasGPT">
+            <button type="submit" class="send-button">
                 <img src="path-to-send-icon.png" alt="Send">
             </button>
         </div>
-    </footer>
-
-    <script src="../assets/script.js"></script> <!-- Link to your JavaScript file -->
+      </form>
+      <script src="{{ url_for('static', filename='assets/script.js') }}"></script>
 </body>
 </html>

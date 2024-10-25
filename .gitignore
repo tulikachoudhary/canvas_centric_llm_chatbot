@@ -1,2 +1,5 @@
 oauth_setup.py
 thing.txt
+output_log.txt
+venv/
+__pycache__/
