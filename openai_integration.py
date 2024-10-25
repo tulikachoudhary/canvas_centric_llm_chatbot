@@ -2,7 +2,7 @@ import openai
 import os
 
 # Your OpenAI API Key
-openai.api_key = 'sk-zmOMBtL4d_hXos-APZqoM86wPuvM-eE6ZyLWk9e_1PT3BlbkFJUdZZAE4wHaesffeQ05YkdOwZVAs1pxwOwd68ifF7UA'
+openai.api_key = 'sk-AHxzOeF5w4sTwj-ePmMklfmcMUAbhUR_pAVyE1W3DfT3BlbkFJQQiLORnGV9Iv29oOVlB58E2ib9j-Ilx2ai8eKz18UA'
 
 # Path to the input log file
 output_file_path = "output_log.txt"
@@ -24,7 +24,7 @@ def query_openai(prompt, model="gpt-4"):
         response = openai.ChatCompletion.create(
             model=model,  # Switch to "gpt-4" or "gpt-4-32k"
             messages=[{"role": "user", "content": prompt}],
-            max_tokens=1000,  # Adjust this based on your needs and token limit
+            max_tokens=200,  # Adjust this based on your needs and token limit
             temperature=0.7
         )
         return response.choices[0].message['content'].strip()
@@ -42,10 +42,15 @@ def ask_openai_based_on_log(question):
     
     if log_content is None:
         return "Log file is empty or doesn't exist."
-    
-    # Formulate the prompt combining the question and log content
-    combined_prompt = f"{question}\n\nHere is the log content:\n{log_content}"
-    
+
+    # Conditionally append log content only if the question is related to course data
+    if "assignment" in question.lower() or "course" in question.lower() or "file" in question.lower():
+        # Formulate the prompt combining the question and log content
+        combined_prompt = f"{question}\n\nHere is the log content:\n{log_content}"
+    else:
+        # If it's a general question like "hi", use only the question
+        combined_prompt = question
+
     # Query OpenAI with the combined prompt
     openai_response = query_openai(combined_prompt)
     
@@ -54,8 +59,24 @@ def ask_openai_based_on_log(question):
     
     return openai_response
 
-# Example usage
+# Example chatbot function to handle interaction
+def chatbot():
+    print("Welcome to the Canvas GPT Chatbot!")
+    
+    while True:
+        user_prompt = input("\nEnter a prompt for OpenAI (or type '/exit' to quit):\n")
+
+        if user_prompt.lower() == "/exit":
+            print("Goodbye!")
+            break
+        
+        # Get the response from OpenAI based on the user prompt
+        response = ask_openai_based_on_log(user_prompt)
+        
+        # Display the response
+        print("\n===== OpenAI Response =====\n")
+        print(response)
+
+# Run the chatbot
 if __name__ == "__main__":
-    question = "give me all the assignment names"
-    response = ask_openai_based_on_log(question)
-    print(response)  # Display the response
+    chatbot()

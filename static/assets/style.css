@@ -55,7 +55,7 @@ footer {
 .message-container {
     display: flex;
     width: 90%;
-    max-width: 500px;
+    max-width: 800px;
     border-radius: 20px;
     background-color: #7E9DAE;
     padding: 10px;

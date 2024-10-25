@@ -18,11 +18,13 @@ def handle_message():
         process_courses()
         response = "Data has been refreshed!\n"
     elif first_run:
+        process_courses()
         response = "Welcome to the Canvas GPT Chatbot!\n\n"
         response += process_with_openai(message_input) + "\n"
         first_run = False
     else:
-        response = process_with_openai(message_input) + "\n"
+        response = "===== OpenAI Response =====\n"
+        response += process_with_openai(message_input) + "\n"
     
     return jsonify({'message': response})
 
