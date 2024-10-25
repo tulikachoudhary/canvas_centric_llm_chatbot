@@ -16,13 +16,13 @@ def handle_message():
 
     if message_input.lower() == '/refresh':
         process_courses()
-        response = "Data has been refreshed!\n\n"
+        response = "Data has been refreshed!\n"
     elif first_run:
         response = "Welcome to the Canvas GPT Chatbot!\n\n"
-        response += process_with_openai(message_input) + "\n\n"
+        response += process_with_openai(message_input) + "\n"
         first_run = False
     else:
-        response = process_with_openai(message_input) + "\n\n"
+        response = process_with_openai(message_input) + "\n"
     
     return jsonify({'message': response})
 

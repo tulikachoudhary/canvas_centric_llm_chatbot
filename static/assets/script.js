@@ -1,20 +1,25 @@
+function scrollToBottom() {
+    const outputBox = document.getElementById('outputBox');
+    outputBox.scrollTop = outputBox.scrollHeight; // Scroll to the bottom
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.querySelector('form');
-    const outputBox = document.getElementById('outputBox');
-
     form.addEventListener('submit', async (event) => {
-        event.preventDefault(); // Prevent the default form submission
-
+        event.preventDefault();
         const formData = new FormData(form);
         const response = await fetch(form.action, {
             method: 'POST',
             body: formData
         });
         const data = await response.json();
-
-        // Append the new message to the output box
-        const messageElement = document.createElement('div');
-        messageElement.innerText = data.message; // Set the response message
-        outputBox.appendChild(messageElement); // Append the message
+        
+        // Append new text to outputBox
+        const outputBox = document.getElementById('outputBox');
+        outputBox.innerText += `\n${data.message}`;  // Append without clearing the previous content
+        
+        // Automatically scroll to the bottom
+        scrollToBottom();
     });
 });
+

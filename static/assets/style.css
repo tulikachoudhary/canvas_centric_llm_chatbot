@@ -30,7 +30,7 @@ main {
 #outputBox {
     width: 90%;
     max-width: 600px;
-    max-height: 600px;
+    max-height: 700px;
     height: 100%;
     background-color: teal;
     color: white;
@@ -39,7 +39,7 @@ main {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow-y: auto; /* Allows scrolling if output exceeds available height */
     box-sizing: border-box;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     margin: 20px 0;
 }
 
