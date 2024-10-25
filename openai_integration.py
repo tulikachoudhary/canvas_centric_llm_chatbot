@@ -2,7 +2,7 @@ import openai
 import os
 
 # Your OpenAI API Key
-openai.api_key = 'sk-AHxzOeF5w4sTwj-ePmMklfmcMUAbhUR_pAVyE1W3DfT3BlbkFJQQiLORnGV9Iv29oOVlB58E2ib9j-Ilx2ai8eKz18UA'
+openai.api_key = ''
 
 # Path to the input log file
 output_file_path = "output_log.txt"
